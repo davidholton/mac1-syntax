@@ -1,0 +1,68 @@
+%YAML 1.2
+---
+name: MAC-1
+file_extensions: [s, asm]
+scope: source.mac-1
+
+contexts:
+  main:
+    - include: comment
+    - include: string
+    - include: number
+    - include: conditional
+    - include: function
+    - include: operation
+    - include: directive
+    - include: label-declaration
+    - include: label
+
+  comment:
+    - match: ';'
+      # scope: punctuation.definition.comment.mac-1
+      push:
+        - meta_scope: comment.mac-1
+        - match: '$'
+          pop: true
+
+  string:
+    - match: '"'
+      # scope: punctuation.definition.string.begin.mac-1
+      push:
+        - meta_scope: string.mac-1
+        - match: \\.
+          scope: constant.character.escape.mac-1
+        - match: '"'
+          # scope: punctuation.definition.string.end.mac-1
+          pop: true
+
+  number:
+    - match: '-?[0-9][0-9]*'
+      scope: constant.numeric.mac-1
+
+  conditional:
+    - match: '\b(?i)(jpos|jzer|jneg|jnze)\b'
+      scope: keyword.control.mac-1
+
+  function:
+    - match: '\b(?i)(lodd|stod|jump|loco|lodl|stol|call|pshi|popi|push|pop|retn|swap|halt)\b'
+      scope: keyword.declaration.mac-1
+
+  operation:
+    - match: '\b(?i)(addd|subd|addl|subl|insp|desp)\b'
+      scope: keyword.operator.word.mac-1
+
+  directive:
+    # Not case sensitive
+    - match: '(\.LOC)\b'
+      scope: keyword.operator.word.mac-1
+
+  label-declaration:
+    - match: '^\s*[A-Za-z_-][0-9A-Za-z_-]*:'
+      scope: entity.name.function.mac-1
+
+  label:
+    - match: '\b[A-Za-z_-][0-9A-Za-z_-]*:'
+      scope: variable.function.mac-1
+
+# Lex has these as keywords but isn't used:
+# INTEG JUNK LABEL STR
