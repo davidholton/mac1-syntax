@@ -1,0 +1,18 @@
+{
+	"schema_version": "3.0.0",
+	"packages": [
+		{
+			"name": "MAC-1 Syntax",
+			"author": "David Holton",
+			"description": "Provides MAC-1 syntax support for Sublime Text 3.",
+			"details": "https://github.com/davidholton/mac1-syntax",
+			"labels": ["language syntax"],
+			"releases": [
+				{
+					"sublime_text": ">=3000",
+					"tags": true
+				}
+			]
+		}
+	]
+}
